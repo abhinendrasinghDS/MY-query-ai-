@@ -1,0 +1,41 @@
+product_name,product_id,category,region,salesperson,sale_date,quantity,unit_price,total_amount,customer_name
+Laptop Pro X,PRD-001,Electronics,North,Rahul Sharma,2024-01-05,3,45000,135000,TechCorp Ltd
+Mobile Galaxy S,PRD-002,Electronics,South,Priya Singh,2024-01-07,10,22000,220000,MobileMart
+Office Chair Deluxe,PRD-003,Furniture,East,Amit Kumar,2024-01-10,5,8500,42500,HomeDecor Inc
+Laptop Pro X,PRD-001,Electronics,West,Sneha Patel,2024-01-12,2,45000,90000,StartupHub
+Wireless Headphones,PRD-004,Electronics,North,Rahul Sharma,2024-01-15,8,3500,28000,TechCorp Ltd
+Standing Desk,PRD-005,Furniture,South,Priya Singh,2024-01-18,3,12000,36000,OfficeSetup Co
+Mobile Galaxy S,PRD-002,Electronics,East,Amit Kumar,2024-01-20,6,22000,132000,PhoneWorld
+Wireless Headphones,PRD-004,Electronics,West,Sneha Patel,2024-01-22,15,3500,52500,RetailZone
+Laptop Pro X,PRD-001,Electronics,South,Deepak Verma,2024-02-01,4,45000,180000,EduTech School
+Office Chair Deluxe,PRD-003,Furniture,North,Rahul Sharma,2024-02-03,8,8500,68000,Corporate Hub
+Tablet Alpha,PRD-006,Electronics,East,Amit Kumar,2024-02-05,12,15000,180000,TabletWorld
+Standing Desk,PRD-005,Furniture,West,Sneha Patel,2024-02-08,2,12000,24000,HomeOffice
+Mobile Galaxy S,PRD-002,Electronics,North,Rahul Sharma,2024-02-10,5,22000,110000,SmartPhones Inc
+Wireless Headphones,PRD-004,Electronics,South,Priya Singh,2024-02-12,20,3500,70000,AudioMart
+Tablet Alpha,PRD-006,Electronics,West,Deepak Verma,2024-02-15,7,15000,105000,Digital Store
+Laptop Pro X,PRD-001,Electronics,East,Amit Kumar,2024-02-18,6,45000,270000,IT Solutions
+Office Chair Deluxe,PRD-003,Furniture,South,Priya Singh,2024-02-20,10,8500,85000,FurnishHome
+Standing Desk,PRD-005,Furniture,North,Rahul Sharma,2024-02-22,4,12000,48000,WorkSpace
+Mobile Galaxy S,PRD-002,Electronics,West,Sneha Patel,2024-03-01,8,22000,176000,MobileHub
+Wireless Headphones,PRD-004,Electronics,East,Amit Kumar,2024-03-03,25,3500,87500,Gadget Galaxy
+Laptop Pro X,PRD-001,Electronics,North,Rahul Sharma,2024-03-05,5,45000,225000,CorporateTech
+Tablet Alpha,PRD-006,Electronics,South,Priya Singh,2024-03-08,9,15000,135000,LearnTech
+Office Chair Deluxe,PRD-003,Furniture,West,Deepak Verma,2024-03-10,6,8500,51000,InteriorDesign
+Mobile Galaxy S,PRD-002,Electronics,North,Rahul Sharma,2024-03-12,12,22000,264000,PhoneExpress
+Standing Desk,PRD-005,Furniture,East,Amit Kumar,2024-03-15,5,12000,60000,ErgonomicOffice
+Wireless Headphones,PRD-004,Electronics,South,Priya Singh,2024-03-18,18,3500,63000,SoundZone
+Laptop Pro X,PRD-001,Electronics,West,Sneha Patel,2024-03-20,3,45000,135000,TechStartup
+Tablet Alpha,PRD-006,Electronics,North,Rahul Sharma,2024-03-22,11,15000,165000,DigitalLearn
+Office Chair Deluxe,PRD-003,Furniture,East,Amit Kumar,2024-04-01,7,8500,59500,HomeFurnish
+Mobile Galaxy S,PRD-002,Electronics,South,Deepak Verma,2024-04-03,9,22000,198000,MobileWorld
+Standing Desk,PRD-005,Furniture,West,Sneha Patel,2024-04-05,3,12000,36000,ModernOffice
+Wireless Headphones,PRD-004,Electronics,North,Rahul Sharma,2024-04-08,30,3500,105000,AudioTech
+Laptop Pro X,PRD-001,Electronics,East,Amit Kumar,2024-04-10,7,45000,315000,Enterprise IT
+Tablet Alpha,PRD-006,Electronics,South,Priya Singh,2024-04-12,14,15000,210000,EduDigital
+Office Chair Deluxe,PRD-003,Furniture,West,Deepak Verma,2024-04-15,12,8500,102000,FurnitureHub
+Mobile Galaxy S,PRD-002,Electronics,North,Rahul Sharma,2024-04-18,4,22000,88000,SmartMobile
+Standing Desk,PRD-005,Furniture,South,Priya Singh,2024-04-20,6,12000,72000,HomeWork
+Wireless Headphones,PRD-004,Electronics,East,Amit Kumar,2024-04-22,22,3500,77000,MusicMall
+Laptop Pro X,PRD-001,Electronics,West,Sneha Patel,2024-05-01,8,45000,360000,BigCorp
+Tablet Alpha,PRD-006,Electronics,North,Rahul Sharma,2024-05-03,6,15000,90000,SchoolTech

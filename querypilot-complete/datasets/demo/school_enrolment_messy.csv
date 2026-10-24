@@ -1,0 +1,17 @@
+school_name,school_id,academic_year,enrolment,region,inspection_date
+Sunrise Public School,SCH-001,2022-23,520,North,2023-03-12
+Sunrise Public School,SCH-001,2023-24,498,North,2024-03-14
+Sunrise Public School,SCH-001,2024-25,461,North,2025-03-10
+Green Valley School,SCH-002,2022-23,340,South,2023-02-19
+Green Valley School,SCH-002,2023-24,355,South,2024-02-21
+Green Valley School,SCH-002,2024-25,352,South,2025-02-18
+St. Mary's School,SCH-003,2022-23,610,West,2023-04-03
+St. Marys School,SCH-003,2023-24,590,West,2024-04-04
+St. Mary's School,SCH-003,2024-25,560,West,2025-04-06
+Riverbank Academy,SCH-004,2022-23,210,East,2023-01-15
+Riverbank Academy,SCH-004,2023-24,,East,2024-01-17
+Riverbank Academy,SCH-004,2024-25,198,East,2025-01-18
+Hilltop School,SCH-005,2022-23,405,Central,2023-05-08
+Hilltop School,SCH-005,2023-24,405,Central,2024-05-10
+Hilltop School,SCH-005,2024-25,430,Central,2025-05-11
+Hilltop School,SCH-005,2024-25,430,Central,2025-05-11

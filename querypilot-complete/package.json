@@ -1,0 +1,14 @@
+{
+  "name": "querypilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "QueryPilot — AI-assisted data analysis platform with verified read-only SQL",
+  "scripts": {
+    "dev:web": "npm --prefix apps/web run dev",
+    "build:web": "npm --prefix apps/web run build",
+    "lint:web": "npm --prefix apps/web run lint",
+    "dev:api": "powershell -Command \"cd services/api; python -m uvicorn app.main:app --reload --port 8000\"",
+    "test:api": "powershell -Command \"cd services/api; python -m pytest\"",
+    "seed": "python scripts/seed_demo.py"
+  }
+}
