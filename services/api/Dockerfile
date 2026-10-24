@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY pyproject.toml README.md ./
+COPY pyproject.toml ./
+COPY README.md* ./
 RUN pip install --upgrade pip && pip install --no-cache-dir .
 
 # ── Stage 2: Runtime ──────────────────────────────────────────────────────────
