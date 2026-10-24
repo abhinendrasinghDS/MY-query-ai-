@@ -21,7 +21,7 @@ services:
     env_file:
       - ./services/api/.env
     environment:
-      DATABASE_URL: postgresql+psycopg://querypilot:${POSTGRES_PASSWORD:-local_dev_only_change_me}@metadata-db:5432/querypilot
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://querypilot:${POSTGRES_PASSWORD:-local_dev_only_change_me}@metadata-db:5432/querypilot}
       DATA_DIR: /app/data
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
     ports:
