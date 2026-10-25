@@ -28,7 +28,11 @@ class Settings(BaseSettings):
     # Provider: "auto" | "ollama" | "gemini" | "grok" | "mock"
     llm_provider: str = "auto"
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=(".env", "services/api/.env"),
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
     @property
     def cors_origin_list(self) -> list[str]:
