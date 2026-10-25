@@ -1,10 +1,13 @@
 import logging
 import uuid
 
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.api.routes import router
 from app.core.config import get_settings
@@ -40,6 +43,21 @@ app.add_middleware(
     expose_headers=["X-Request-ID"],
 )
 app.include_router(router, prefix=settings.api_prefix)
+# Also include router directly so requests without /api/v1 prefix succeed seamlessly
+app.include_router(router, include_in_schema=False)
+
+
+@app.get("/api/status", tags=["health"], summary="API Root Status")
+def root_status():
+    return {
+        "status": "online",
+        "service": settings.app_name,
+        "version": "0.2.0",
+        "docs": "/docs",
+        "health": "/health/live",
+        "api_prefix": settings.api_prefix,
+        "message": "My Query AI API is up and running.",
+    }
 
 
 @app.middleware("http")
@@ -142,3 +160,55 @@ def ready():
             "The metadata database is not ready.",
             status_code=503,
         ) from exc
+
+
+# ── Frontend Static Files Support (Single Container Deployment) ──────────────
+STATIC_DIRS = [
+    Path("/app/static"),
+    Path(__file__).resolve().parent.parent / "static",
+    Path(__file__).resolve().parent.parent.parent.parent / "apps" / "web" / "out",
+]
+static_dir = next((d for d in STATIC_DIRS if d.is_dir()), None)
+
+if static_dir:
+    next_dir = static_dir / "_next"
+    if next_dir.is_dir():
+        app.mount("/_next", StaticFiles(directory=str(next_dir)), name="next_assets")
+
+    @app.get("/", tags=["frontend"], include_in_schema=False)
+    async def serve_root():
+        index_file = static_dir / "index.html"
+        if index_file.is_file():
+            return FileResponse(index_file)
+        return root_status()
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_frontend(full_path: str):
+        if full_path.startswith(("api", "health", "docs", "openapi.json", "redoc")):
+            raise HTTPException(status_code=404, detail="Not Found")
+
+        # 1. Exact file match (favicon, images, etc.)
+        file_path = static_dir / full_path
+        if file_path.is_file():
+            return FileResponse(file_path)
+
+        # 2. HTML page match (e.g. login -> login.html, dashboard -> dashboard.html)
+        html_page = static_dir / f"{full_path.rstrip('/')}.html"
+        if html_page.is_file():
+            return FileResponse(html_page)
+
+        # 3. Directory index.html
+        dir_index = static_dir / full_path / "index.html"
+        if dir_index.is_file():
+            return FileResponse(dir_index)
+
+        # 4. Fallback to index.html for client routing
+        index_file = static_dir / "index.html"
+        if index_file.is_file():
+            return FileResponse(index_file)
+
+        raise HTTPException(status_code=404, detail="Not Found")
+else:
+    @app.get("/", tags=["health"], summary="API Root Status")
+    def fallback_root():
+        return root_status()

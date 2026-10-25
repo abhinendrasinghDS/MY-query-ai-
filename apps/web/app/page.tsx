@@ -233,7 +233,7 @@ ORDER BY school_name, academic_year ASC;`,
               <div className="lp-preview-prompt-box">
                 <div>
                   <div className="lp-prompt-label">User Question in Plain English</div>
-                  <div className="lp-prompt-question">"{currentDemo.question}"</div>
+                  <div className="lp-prompt-question">&ldquo;{currentDemo.question}&rdquo;</div>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: 11, background: "rgba(255,255,255,0.06)", padding: "4px 8px", borderRadius: 6, color: "var(--lp-text-muted)" }}>
@@ -373,7 +373,7 @@ ORDER BY school_name, academic_year ASC;`,
               <div className="lp-step-num">2</div>
               <h4 className="lp-step-title">Ask in Plain English</h4>
               <p className="lp-step-desc">
-                Type your business question naturally (e.g. <em>"What are the top 5 selling products?"</em> or <em>"Sales by region?"</em>).
+                Type your business question naturally (e.g. <em>&ldquo;What are the top 5 selling products?&rdquo;</em> or <em>&ldquo;Sales by region?&rdquo;</em>).
               </p>
             </div>
 

@@ -47,8 +47,19 @@ type APIError = {
   request_id?: string;
   details?: { field: string; message: string }[];
 };
+function getApiBaseUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (!envUrl || envUrl.trim() === "") {
+    return "/api/v1";
+  }
+  const trimmed = envUrl.trim().replace(/\/+$/, "");
+  if (!trimmed.endsWith("/api/v1")) {
+    return `${trimmed}/api/v1`;
+  }
+  return trimmed;
+}
 
-const API = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1";
+const API = getApiBaseUrl();
 
 class APIRequestError extends Error {
   code?: string;
