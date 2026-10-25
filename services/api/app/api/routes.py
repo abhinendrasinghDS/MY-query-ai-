@@ -160,13 +160,7 @@ async def upload_database(file: UploadFile = File(...), db: Session = Depends(ge
     return {**_dataset_out(record), "row_count": rows}
 
 
-@router.post(
-    "/datasets/seed-demo",
-    tags=["datasets"],
-    response_model=DatasetUploadOut,
-    status_code=201,
-    responses=ERROR_RESPONSES,
-    summary="Seed the demo school enrolment dataset",
+
 def _find_demo_file(filename: str) -> Path:
     candidates = [
         Path("/app/datasets/demo") / filename,
