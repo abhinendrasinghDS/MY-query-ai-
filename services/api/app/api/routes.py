@@ -283,6 +283,8 @@ async def create_analysis(payload: AnalysisRequest, db: Session = Depends(get_db
             },
             payload.question,
             llm_provider=payload.llm_provider,
+            api_key=payload.api_key,
+            model=payload.model,
         )
     except (httpx.HTTPError, ValueError) as exc:
         logger.warning("Analysis provider failed: %s", type(exc).__name__)

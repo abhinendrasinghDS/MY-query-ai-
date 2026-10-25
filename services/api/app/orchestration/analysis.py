@@ -14,19 +14,19 @@ from app.validation.answer_generator import generate_natural_answer
 logger = logging.getLogger("querypilot.orchestration")
 
 
-def _make_provider(provider_name: str, settings=None):
+def _make_provider(provider_name: str, settings=None, api_key: str | None = None, model: str | None = None):
     """Factory: instantiate the correct LLM provider by name."""
     if settings is None:
         settings = get_settings()
     name = provider_name.lower()
     if name == "gemini":
         from app.llm.gemini_provider import GeminiProvider
-        return GeminiProvider()
+        return GeminiProvider(api_key=api_key or settings.gemini_api_key, model=model or settings.gemini_model)
     if name == "grok":
         from app.llm.grok_provider import GrokProvider
-        return GrokProvider()
+        return GrokProvider(api_key=api_key or settings.grok_api_key, model=model or settings.grok_model)
     if name == "ollama":
-        return OllamaProvider()
+        return OllamaProvider(model=model or settings.ollama_model)
     if name == "mock":
         return MockProvider()
     raise ValueError(f"Unknown LLM provider: {provider_name!r}")
@@ -36,6 +36,8 @@ async def run_analysis(
     dataset: dict,
     question: str,
     llm_provider: str | None = None,
+    api_key: str | None = None,
+    model: str | None = None,
 ) -> dict:
     started = time.perf_counter()
     analysis_id = uuid.uuid4().hex
@@ -47,6 +49,7 @@ async def run_analysis(
     settings = get_settings()
     # Per-request override > env config
     effective_provider = (llm_provider or settings.llm_provider).lower()
+    gemini_key = api_key or settings.gemini_api_key
 
     with StageTimer("llm_generation"):
         if effective_provider == "mock":
@@ -56,8 +59,8 @@ async def run_analysis(
             candidate = None
             tried = []
             cascade = []
-            if settings.gemini_api_key:
-                cascade.append(("gemini", lambda: _make_provider("gemini", settings)))
+            if gemini_key:
+                cascade.append(("gemini", lambda: _make_provider("gemini", settings, api_key=gemini_key, model=model)))
             if settings.grok_api_key:
                 cascade.append(("grok", lambda: _make_provider("grok", settings)))
             cascade.append(("ollama", lambda: OllamaProvider()))
@@ -77,7 +80,7 @@ async def run_analysis(
                 candidate = await MockProvider(note=fallback_note).generate_sql(context)
         else:
             try:
-                candidate = await _make_provider(effective_provider, settings).generate_sql(context)
+                candidate = await _make_provider(effective_provider, settings, api_key=api_key, model=model).generate_sql(context)
             except Exception as exc:
                 logger.warning("Provider %r failed: %s", effective_provider, exc)
                 raise

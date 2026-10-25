@@ -229,6 +229,12 @@ export default function Dashboard() {
   useEffect(() => {
     void refreshDatasets();
     void loadLLMSettings();
+    if (typeof window !== "undefined") {
+      const savedGemini = localStorage.getItem("myquery_gemini_key");
+      if (savedGemini) setGeminiKey(savedGemini);
+      const savedProvider = localStorage.getItem("myquery_llm_provider");
+      if (savedProvider) setSelectedProvider(savedProvider);
+    }
   }, []);
 
   useEffect(() => {
@@ -315,10 +321,17 @@ export default function Dashboard() {
       const body: Record<string, unknown> = { dataset_id: selected, question: q };
       if (selectedProvider && selectedProvider !== "auto") {
         body.llm_provider = selectedProvider;
-      } else if (geminiKey) {
-        body.llm_provider = "gemini";
-      } else if (grokKey) {
-        body.llm_provider = "grok";
+      }
+      if (geminiKey && geminiKey.trim()) {
+        body.api_key = geminiKey.trim();
+        if (!body.llm_provider) {
+          body.llm_provider = "gemini";
+        }
+      } else if (grokKey && grokKey.trim()) {
+        body.api_key = grokKey.trim();
+        if (!body.llm_provider) {
+          body.llm_provider = "grok";
+        }
       }
       const res = await fetch(`${API}/analyses`, {
         method: "POST",
@@ -1630,6 +1643,16 @@ export default function Dashboard() {
               <button
                 className="qp-btn primary full"
                 onClick={() => {
+                  if (typeof window !== "undefined") {
+                    if (geminiKey.trim()) {
+                      localStorage.setItem("myquery_gemini_key", geminiKey.trim());
+                    } else {
+                      localStorage.removeItem("myquery_gemini_key");
+                    }
+                    if (selectedProvider) {
+                      localStorage.setItem("myquery_llm_provider", selectedProvider);
+                    }
+                  }
                   setSettingsSaved(true);
                   setTimeout(() => setSettingsSaved(false), 3000);
                   setShowSettings(false);

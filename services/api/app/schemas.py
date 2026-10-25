@@ -39,6 +39,10 @@ class AnalysisRequest(BaseModel):
     ]
     # Per-request provider override: "auto" | "ollama" | "gemini" | "grok" | "mock"
     llm_provider: str | None = None
+    # User's manual API key (e.g. Google Gemini AI Studio key from browser)
+    api_key: str | None = None
+    # Optional model override (e.g. gemini-1.5-flash, gemini-2.0-flash)
+    model: str | None = None
 
 
 class AnalysisOut(BaseModel):
