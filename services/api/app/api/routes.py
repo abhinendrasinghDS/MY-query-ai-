@@ -152,7 +152,7 @@ async def upload_database(file: UploadFile = File(...), db: Session = Depends(ge
         name=filename,
         kind=kind,
         table_name=table_name,
-        storage_path=str(db_path),
+        storage_path=Path(db_path).as_posix(),
     )
     db.add(record)
     db.commit()
@@ -198,7 +198,7 @@ def seed_demo_dataset(db: Session = Depends(get_db)):
         name="school_enrolment_messy.csv",
         kind="csv",
         table_name=table_name,
-        storage_path=str(db_path),
+        storage_path=Path(db_path).as_posix(),
     )
     db.add(record)
     db.commit()
@@ -230,7 +230,7 @@ def seed_sales_demo_dataset(db: Session = Depends(get_db)):
         name="sales_data.csv",
         kind="csv",
         table_name=table_name,
-        storage_path=str(db_path),
+        storage_path=Path(db_path).as_posix(),
     )
     db.add(record)
     db.commit()

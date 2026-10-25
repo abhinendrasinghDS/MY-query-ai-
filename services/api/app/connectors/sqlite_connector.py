@@ -6,7 +6,10 @@ from app.connectors.base import DataConnector, QueryResult
 
 class SQLiteConnector(DataConnector):
     def __init__(self, path: str | Path):
-        self.path = Path(path).resolve()
+        # Normalize: replace Windows backslashes with forward slashes
+        # so paths stored on Windows work correctly on Linux (Render)
+        normalized = str(path).replace("\\", "/")
+        self.path = Path(normalized).resolve()
         if not self.path.exists():
             raise FileNotFoundError(f"Dataset storage not found: {self.path}")
 
