@@ -167,15 +167,31 @@ async def upload_database(file: UploadFile = File(...), db: Session = Depends(ge
     status_code=201,
     responses=ERROR_RESPONSES,
     summary="Seed the demo school enrolment dataset",
+def _find_demo_file(filename: str) -> Path:
+    candidates = [
+        Path("/app/datasets/demo") / filename,
+        Path("datasets/demo") / filename,
+        Path(__file__).resolve().parents[4] / "datasets" / "demo" / filename,
+        Path(__file__).resolve().parent.parent.parent.parent / "datasets" / "demo" / filename,
+    ]
+    for c in candidates:
+        if c.exists():
+            return c.resolve()
+    raise QueryPilotError("DEMO_NOT_FOUND", f"Demo dataset file not found: {filename}", status_code=404)
+
+
+@router.post(
+    "/datasets/seed-demo",
+    tags=["datasets"],
+    response_model=DatasetUploadOut,
+    status_code=201,
+    responses=ERROR_RESPONSES,
+    summary="Seed the messy demo dataset",
     description="Loads datasets/demo/school_enrolment_messy.csv directly into the workspace.",
 )
 def seed_demo_dataset(db: Session = Depends(get_db)):
     settings = get_settings()
-    demo_file = Path(__file__).resolve().parents[4] / "datasets" / "demo" / "school_enrolment_messy.csv"
-    if not demo_file.exists():
-        demo_file = Path("datasets/demo/school_enrolment_messy.csv").resolve()
-    if not demo_file.exists():
-        raise QueryPilotError("DEMO_NOT_FOUND", "Demo dataset file not found.", status_code=404)
+    demo_file = _find_demo_file("school_enrolment_messy.csv")
 
     settings.data_dir.mkdir(parents=True, exist_ok=True)
     db_path, table_name, rows = ingest_csv(
@@ -207,11 +223,7 @@ def seed_demo_dataset(db: Session = Depends(get_db)):
 )
 def seed_sales_demo_dataset(db: Session = Depends(get_db)):
     settings = get_settings()
-    demo_file = Path(__file__).resolve().parents[4] / "datasets" / "demo" / "sales_data.csv"
-    if not demo_file.exists():
-        demo_file = Path("datasets/demo/sales_data.csv").resolve()
-    if not demo_file.exists():
-        raise QueryPilotError("DEMO_NOT_FOUND", "Sales demo dataset file not found.", status_code=404)
+    demo_file = _find_demo_file("sales_data.csv")
 
     settings.data_dir.mkdir(parents=True, exist_ok=True)
     db_path, table_name, rows = ingest_csv(

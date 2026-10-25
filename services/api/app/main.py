@@ -100,14 +100,16 @@ async def querypilot_error_handler(request: Request, exc: QueryPilotError):
 async def generic_error_handler(request: Request, exc: Exception):
     request_id = getattr(request.state, "request_id", "unknown")
     logging.getLogger("querypilot").exception(
-        "Unhandled request error (request_id=%s)",
+        "Unhandled request error (request_id=%s): %s",
         request_id,
+        exc,
     )
+    msg = f"{type(exc).__name__}: {str(exc)}" if str(exc) else f"{type(exc).__name__} occurred"
     return _error_response(
         request,
         500,
         "INTERNAL_SERVER_ERROR",
-        "An unexpected error occurred. Please try again or share the request ID with support.",
+        msg,
     )
 
 

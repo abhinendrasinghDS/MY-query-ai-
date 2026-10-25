@@ -44,6 +44,7 @@ COPY --from=backend-builder /usr/local/bin /usr/local/bin
 COPY services/api/app ./app
 # Copy static frontend export directly into /app/static for FastAPI to serve
 COPY --from=frontend-builder /web/out ./static
+COPY datasets ./datasets
 
 RUN mkdir -p /app/data/sources && chmod -R 777 /app/data
 
